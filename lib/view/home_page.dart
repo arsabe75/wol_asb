@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:wol_asb/controller/home_controller.dart';
+import 'package:wake_on_lan/wake_on_lan.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final homeController = Get.put(HomeController());
+    void wol(String mac) {
+      String ip = '192.168.0.255';
+      // Validate that the two strings are formatted correctly
+      if (!IPv4Address.validate(ip)) {
+        print('Invalid IPv4 Address String');
+        return;
+      }
+      if (!MACAddress.validate(mac)) {
+        print('Invalid MAC Address String');
+        return;
+      }
+
+      // Create the IPv4 and MAC objects
+      IPv4Address ipv4Address = IPv4Address(ip);
+      MACAddress macAddress = MACAddress(mac);
+      // Send the WOL packet
+      // Port parameter is optional. Default 9.
+      WakeOnLAN(ipv4Address, macAddress, port: 9).wake();
+      print('Enviando');
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('WOL ASB'),
@@ -18,8 +37,7 @@ class HomePage extends StatelessWidget {
           Center(
             child: ElevatedButton(
               onPressed: () {
-                homeController.mac = 'B0:0C:D1:62:9A:68';
-                homeController.wol();
+                wol('B0:0C:D1:62:9A:68');
               },
               child: Text('Encender Laptop'),
             ),
@@ -30,8 +48,7 @@ class HomePage extends StatelessWidget {
           Center(
             child: ElevatedButton(
               onPressed: () {
-                homeController.mac = 'E0:69:95:A6:A4:AA';
-                homeController.wol();
+                wol('E0:69:95:A6:A4:AA');
               },
               child: Text('Encender Desk Server'),
             ),
@@ -42,8 +59,7 @@ class HomePage extends StatelessWidget {
           Center(
             child: ElevatedButton(
               onPressed: () {
-                homeController.mac = '00:01:6C:6E:0C:E3';
-                homeController.wol();
+                wol('00:01:6C:6E:0C:E3');
               },
               child: Text('Encender Kali Server'),
             ),
