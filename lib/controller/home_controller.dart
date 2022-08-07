@@ -18,11 +18,11 @@ class HomeController extends GetxController {
     }
 
     // Create the IPv4 and MAC objects
-    IPv4Address ipv4Address = IPv4Address.from(ip);
-    MACAddress macAddress = MACAddress.from(mac);
+    IPv4Address ipv4Address = IPv4Address(ip);
+    MACAddress macAddress = MACAddress(mac);
     // Send the WOL packet
     // Port parameter is optional. Default 9.
-    WakeOnLAN.from(ipv4Address, macAddress, port: 9).wake();
+    WakeOnLAN(ipv4Address, macAddress, port: 9).wake();
     print('Enviando');
   }
 }

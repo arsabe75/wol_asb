@@ -36,6 +36,18 @@ class HomePage extends StatelessWidget {
               child: Text('Encender Desk Server'),
             ),
           ),
+          SizedBox(
+            height: 30,
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                homeController.mac = '00:01:6C:6E:0C:E3';
+                homeController.wol();
+              },
+              child: Text('Encender Kali Server'),
+            ),
+          ),
         ],
       ),
     );
